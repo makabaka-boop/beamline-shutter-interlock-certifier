@@ -1,0 +1,17 @@
+# 快门联锁认证工作台 —— 纯前端页面服务。
+# 启动：docker compose up --build
+# 访问：http://localhost:8080
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: shutter-workbench-web:latest
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
